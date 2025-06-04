@@ -45,7 +45,7 @@ class ArtistView(ViewSet):
     """Handle PUT requests for an artist
     
     Returns:
-      Response -- Empty body with 204 status code"""
+      Response -- JSON serialized artist instance"""
     
     artist = Artist.objects.get(pk=pk)
     
