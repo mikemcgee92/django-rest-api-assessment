@@ -1,0 +1,29 @@
+[
+  {
+    "model": "tunaapi.artist",
+    "pk": 1,
+    "fields": {
+      "name": "Passion Pit",
+      "age": 38,
+      "bio": "Indietronica band from New Jersey" 
+    }
+  },
+  {
+    "model": "tunaapi.artist",
+    "pk": 2,
+    "fields": {
+      "name": "Bleachers",
+      "age": 41,
+      "bio": "Indie pop group from New Jersey"
+    }
+  },
+  {
+    "model": "tunaapi.artist",
+    "pk": 3,
+    "fields": {
+      "name": "CHVRCHES",
+      "age": 37,
+      "bio": "Indietronica group from Scotland"
+    }
+  }
+]

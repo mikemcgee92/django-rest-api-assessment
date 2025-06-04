@@ -1,0 +1,32 @@
+[
+  {
+    "model": "tunaapi.song",
+    "pk": 1,
+    "fields": {
+      "title": "Little Secrets",
+      "artist_id": 1,
+      "album": "Manners",
+      "length": 4
+    }
+  },
+  {
+    "model": "tunaapi.song",
+    "pk": 2,
+    "fields": {
+      "title": "Asking for a Friend",
+      "artist_id": 3,
+      "album": "Screen Violence",
+      "length": 5
+    }
+  },
+  {
+    "model": "tunaapi.song",
+    "pk": 3,
+    "fields": {
+      "title": "Everybody Lost Somebody",
+      "artist_id": 2,
+      "album": "Gone Now",
+      "length": 4
+    }
+  }
+]
