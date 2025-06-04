@@ -54,8 +54,8 @@ class ArtistView(ViewSet):
     artist.bio = request.data["bio"]
     
     artist.save()
-    
-    return Response(None, status=status.HTTP_204_NO_CONTENT)
+    serializer = ArtistSerializer(artist)
+    return Response(serializer.data)
 
   def destroy(self, request, pk):
     artist = Artist.objects.get(pk=pk)
@@ -67,4 +67,3 @@ class ArtistSerializer(serializers.ModelSerializer):
   class Meta:
     model = Artist
     fields = ('id', 'name', 'age', 'bio')
-    depth = 1
