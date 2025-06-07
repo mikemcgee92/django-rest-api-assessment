@@ -1,7 +1,9 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from tunaapi.models import Artist
+from tunaapi.models import Artist, Song
+from .song_view import SongSerializer
+from django.db.models import Count
 
 
 class ArtistView(ViewSet):
@@ -13,8 +15,8 @@ class ArtistView(ViewSet):
     Returns:
       Response -- JSON serialized artist"""
     try:
-      artist = Artist.objects.get(pk=pk)
-      serializer = ArtistSerializer(artist)
+      artist = Artist.objects.filter(pk=pk).annotate(song_count = Count('songs')).first()
+      serializer = ArtistDetailSerializer(artist)
       return Response(serializer.data)
     except Artist.DoesNotExist as ex:
       return Response({'No artist exists with specified ID': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
@@ -39,13 +41,13 @@ class ArtistView(ViewSet):
       bio = request.data["bio"],
     )
     serializer = ArtistSerializer(artist)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
   
   def update(self, request, pk):
     """Handle PUT requests for an artist
     
     Returns:
-      Response -- Empty body with 204 status code"""
+      Response -- JSON serialized artist instance"""
     
     artist = Artist.objects.get(pk=pk)
     
@@ -55,7 +57,7 @@ class ArtistView(ViewSet):
     
     artist.save()
     serializer = ArtistSerializer(artist)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
   def destroy(self, request, pk):
     artist = Artist.objects.get(pk=pk)
@@ -67,3 +69,15 @@ class ArtistSerializer(serializers.ModelSerializer):
   class Meta:
     model = Artist
     fields = ('id', 'name', 'age', 'bio')
+
+class ArtistDetailSerializer(serializers.ModelSerializer):
+  """JSON serializer for single artist using retrieve method"""
+  songs = serializers.SerializerMethodField()
+  song_count = serializers.IntegerField(default=None)
+  class Meta:
+    model = Artist
+    fields = ('id', 'name', 'age', 'bio', 'songs', 'song_count')
+  
+  def get_songs(self, obj):
+    songs = Song.objects.filter(artist_id = obj)
+    return SongSerializer(songs, many=True).data
