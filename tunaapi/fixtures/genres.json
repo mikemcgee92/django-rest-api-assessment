@@ -1,0 +1,16 @@
+[
+  {
+    "model": "tunaapi.genre",
+    "pk": 1,
+    "fields": {
+      "description": "Indietronica"
+    }
+  },
+  {
+    "model": "tunaapi.genre",
+    "pk": 2,
+    "fields": {
+      "description": "Indie Pop"
+    }
+  }
+]
